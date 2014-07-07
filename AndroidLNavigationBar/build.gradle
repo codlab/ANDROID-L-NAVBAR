@@ -1,0 +1,62 @@
+apply plugin: 'android'
+
+    android {
+        compileSdkVersion 19
+        buildToolsVersion "20"
+
+        defaultConfig {
+            minSdkVersion 7
+            targetSdkVersion 19
+            versionCode getDefinedVersionCode()
+            versionName getDefinedVersionName()
+        }
+
+
+    signingConfigs {
+        debug {
+            storeFile file(PATH)
+            storePassword MDP
+            keyAlias "codlab"
+            keyPassword MDP
+        }
+        release {
+            storeFile file(PATH)
+            storePassword MDP
+            keyAlias "codlab"
+            keyPassword MDP
+        }
+    }
+
+    productFlavors {
+        kitkat{
+            signingConfig signingConfigs.release
+        }
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    lintOptions {
+        //checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        //abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/LICENCE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    sourceSets.main.jni.srcDirs = []
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
